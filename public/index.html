@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVENT - منصة الدعوات الذكية مع QR Code</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0a0a1f 0%, #1a1a35 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* تصميم الصفحة الرئيسية */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* القائمة العلوية */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 0;
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            transform: rotate(10deg);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: rotate(10deg) translateY(0); }
+            50% { transform: rotate(10deg) translateY(-10px); }
+        }
+
+        .logo-icon::before {
+            content: '📅';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-10deg);
+            font-size: 28px;
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            width: 15px;
+            height: 15px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+
+        .logo-text {
+            font-size: 32px;
+            font-weight: 800;
+        }
+
+        .logo-text span:first-child {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 38px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.2);
+            color: #fff;
+        }
+
+        .btn-outline:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        /* القسم الرئيسي - شرح الفكرة */
+        .hero-section {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea, #764ba2, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientMove 5s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        /* قسم شرح مسح QR Code - الجزء المهم */
+        .qr-explanation {
+            position: relative;
+        }
+
+        .qr-showcase {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 40px;
+            padding: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .qr-showcase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 70% 30%, rgba(102, 126, 234, 0.2), transparent 70%);
+            pointer-events: none;
+        }
+
+        .phone-mockup {
+            width: 280px;
+            height: 560px;
+            background: #1a1a2f;
+            border-radius: 40px;
+            margin: 0 auto;
+            position: relative;
+            border: 3px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f0f1f, #1f1f3f);
+            padding: 20px;
+            position: relative;
+        }
+
+        .phone-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .phone-header .time {
+            color: rgba(255,255,255,0.8);
+            font-size: 12px;
+        }
+
+        .camera-view {
+            width: 100%;
+            height: 300px;
+            background: #000;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .camera-view::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                transparent 40%, 
+                rgba(102, 126, 234, 0.3) 45%,
+                transparent 55%);
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .qr-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            border: 3px solid rgba(255,255,255,0.5);
+            border-radius: 20px;
+            box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
+        }
+
+        .qr-frame::before,
+        .qr-frame::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-color: #667eea;
+            border-style: solid;
+        }
+
+        .qr-frame::before {
+            top: -3px;
+            left: -3px;
+            border-width: 3px 0 0 3px;
+            border-radius: 15px 0 0 0;
+        }
+
+        .qr-frame::after {
+            bottom: -3px;
+            right: -3px;
+            border-width: 0 3px 3px 0;
+            border-radius: 0 0 15px 0;
+        }
+
+        .qr-code-animation {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 130px;
+            height: 130px;
+            background: white;
+            border-radius: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            padding: 10px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        .qr-code-animation div {
+            background: #000;
+            border-radius: 3px;
+        }
+
+        .qr-code-animation div:nth-child(2),
+        .qr-code-animation div:nth-child(4),
+        .qr-code-animation div:nth-child(6),
+        .qr-code-animation div:nth-child(8) {
+            background: #667eea;
+        }
+
+        .scan-result {
+            margin-top: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px;
+            backdrop-filter: blur(5px);
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-success {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .success-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .result-text h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .result-text p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .hand-phone {
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            transform: rotate(-15deg);
+            animation: handMove 3s ease-in-out infinite;
+        }
+
+        @keyframes handMove {
+            0%, 100% { transform: rotate(-15deg) translateY(0); }
+            50% { transform: rotate(-15deg) translateY(-20px); }
+        }
+
+        .floating-qr {
+            position: absolute;
+            top: 50px;
+            right: -30px;
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .floating-qr div {
+            background: #667eea;
+            border-radius: 3px;
+        }
+
+        .floating-qr div:nth-child(2n) {
+            background: #764ba2;
+        }
+
+        /* شرح الخطوات */
+        .steps-section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .step-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 30px;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .step-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .step-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .step-card p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+        }
+
+        /* قسم المميزات */
+        .features-section {
+            padding: 80px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .feature-item {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            color: #667eea;
+        }
+
+        .feature-item h4 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .feature-item p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+
+        /* التذييل */
+        .footer {
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            padding: 50px 0 20px;
+            margin-top: 80px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: #667eea;
+            padding-right: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* تأثيرات متحركة */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* استجابة للشاشات الصغيرة */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- القائمة العلوية -->
+        <nav class="navbar">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <div class="logo-text">
+                    <span>E</span>vent
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="#">الرئيسية</a>
+                <a href="#">المميزات</a>
+                <a href="#">كيف تعمل</a>
+                <a href="#">الباقات</a>
+                <a href="#">اتصل بنا</a>
+            </div>
+            <div class="nav-buttons">
+                <a href="#" class="btn btn-outline">تسجيل الدخول</a>
+                <a href="#" class="btn btn-gradient">ابدأ مجاناً</a>
+            </div>
+        </nav>
+
+        <!-- القسم الرئيسي مع شرح مسح QR -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>
+                        دعوات ذكية مع
+                        <span class="gradient-text">QR Code</span>
+                        <br>لمناسباتك
+                    </h1>
+                    <p class="hero-description">
+                        منصة Event تقدم لك حلاً متكاملاً لإنشاء وإدارة الدعوات الرقمية. 
+                        كل مدعو يحصل على QR Code فريد يمنع التكرار وينظم الدخول بكل سهولة.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">+10,000</span>
+                            <span class="stat-label">مناسبة ناجحة</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">+50,000</span>
+                            <span class="stat-label">مدعو</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">98%</span>
+                            <span class="stat-label">رضا العملاء</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- شرح مسح QR Code بشكل مرئي -->
+                <div class="qr-explanation">
+                    <div class="qr-showcase">
+                        <!-- الهاتف مع المسح -->
+                        <div class="phone-mockup">
+                            <div class="phone-screen">
+                                <div class="phone-header">
+                                    <span class="time">09:41</span>
+                                </div>
+                                
+                                <!-- كاميرا المسح -->
+                                <div class="camera-view">
+                                    <div class="qr-frame"></div>
+                                    <div class="qr-code-animation">
+                                        <div></div><div></div><div></div>
+                                        <div></div><div></div><div></div>
+                                        <div></div><div></div><div></div>
+                                    </div>
+                                </div>
+
+                                <!-- نتيجة المسح -->
+                                <div class="scan-result">
+                                    <div class="result-success">
+                                        <div class="success-icon">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="result-text">
+                                            <h4>تم التحقق بنجاح!</h4>
+                                            <p>أحمد محمد - حفل زفاف</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- يد تمسك بالهاتف (توضيح) -->
+                        <div class="hand-phone">
+                            <i class="fas fa-hand-paper"></i>
+                        </div>
+
+                        <!-- QR Code طائر -->
+                        <div class="floating-qr">
+                            <div></div><div></div><div></div>
+                            <div></div><div></div><div></div>
+                            <div></div><div></div><div></div>
+                        </div>
+                    </div>
+
+                    <!-- شرح مبسط أسفل الصورة -->
+                    <div style="text-align: center; margin-top: 20px;">
+                        <span style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 8px 20px; border-radius: 50px; font-size: 14px;">
+                            <i class="fas fa-camera"></i> 1 ثانية فقط للمسح والتحقق
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- شرح خطوات العمل -->
+        <section class="steps-section">
+            <h2 class="section-title">كيف <span class="gradient-text">تعمل</span> المنصة؟</h2>
+            <div class="steps-grid">
+                <div class="step-card" data-aos="fade-up">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3>إنشاء حساب</h3>
+                    <p>سجل في المنصة مجاناً واختر الباقة المناسبة لمناسبتك</p>
+                </div>
+                <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h3>توليد QR Code</h3>
+                    <p>أضف المدعوين وسيتم توليد رمز QR فريد لكل مدعو تلقائياً</p>
+                </div>
+                <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>مسح عند الدخول</h3>
+                    <p>عند المدخل، يتم مسح QR ويسجل الدخول مع منع التكرار</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- المميزات -->
+        <section class="features-section">
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h4>QR Code فريد</h4>
+                    <p>كل مدعو له رمز خاص يمنع التكرار</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>إحصائيات لحظية</h4>
+                    <p>تابع الحضور والمقبولين مباشرة</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>أمان متقدم</h4>
+                    <p>نظام تشفير يمنع التزوير والنسخ</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4>متوافق مع الجوال</h4>
+                    <p>يعمل على جميع الأجهزة بسلاسة</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- دعوة للتسجيل -->
+        <div style="text-align: center; padding: 60px 0;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">
+                استعد لتنظيم أفضل مناسبة
+            </h2>
+            <p style="color: rgba(255,255,255,0.7); margin-bottom: 30px; font-size: 1.2rem;">
+                انضم إلى آلاف المستخدمين الذين يثقون في منصتنا
+            </p>
+            <a href="#" class="btn btn-gradient" style="padding: 15px 50px; font-size: 1.2rem;">
+                ابدأ مجاناً <i class="fas fa-arrow-left" style="margin-right: 10px;"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- التذييل -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>Event</h4>
+                    <p style="color: rgba(255,255,255,0.6); line-height: 1.8;">
+                        منصة متكاملة للدعوات الذكية مع QR Code لمناسباتك الخاصة والعامة.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="#">الرئيسية</a></li>
+                        <li><a href="#">المميزات</a></li>
+                        <li><a href="#">كيف تعمل</a></li>
+                        <li><a href="#">الباقات</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>الدعم</h4>
+                    <ul>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                        <li><a href="#">شروط الاستخدام</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>تواصل معنا</h4>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" style="color: rgba(255,255,255,0.6); font-size: 24px;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: rgba(255,255,255,0.6); font-size: 24px;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: rgba(255,255,255,0.6); font-size: 24px;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: rgba(255,255,255,0.6); font-size: 24px;"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2024 Event. جميع الحقوق محفوظة. منصة الدعوات الذكية مع QR Code</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- إضافة AOS للتأثيرات -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+</body>
+</html>

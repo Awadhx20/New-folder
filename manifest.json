@@ -1,0 +1,41 @@
+{
+    "name": "Event - Digital Invitations Platform",
+    "short_name": "Event",
+    "description": "Create and manage digital invitations with QR code validation",
+    "start_url": "/public/index.html",
+    "display": "standalone",
+    "background_color": "#0a0a0a",
+    "theme_color": "#6c5ce7",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "https://via.placeholder.com/192x192/6c5ce7/ffffff?text=Event",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "https://via.placeholder.com/512x512/6c5ce7/ffffff?text=Event",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Dashboard",
+            "url": "/public/dashboard.html",
+            "description": "View your dashboard"
+        },
+        {
+            "name": "Create Event",
+            "url": "/public/create-event.html",
+            "description": "Create a new event"
+        },
+        {
+            "name": "Scanner",
+            "url": "/public/scanner.html",
+            "description": "Scan QR codes"
+        }
+    ]
+}

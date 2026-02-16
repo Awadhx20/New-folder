@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Event</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="dashboard-body">
+    <div id="loader" class="loader-wrapper">
+        <div class="loader"></div>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar glass-card" id="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-calendar-alt gradient-text"></i> Event</h3>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="create-event.html"><i class="fas fa-plus-circle"></i> Create Event</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> Guests</a></li>
+                <li><a href="#"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                <li><a href="scanner.html"><i class="fas fa-camera"></i> Scanner</a></li>
+                <li><a href="pricing.html"><i class="fas fa-crown"></i> Upgrade</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="container-fluid">
+                <!-- Stats Cards -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-3" data-aos="fade-up">
+                        <div class="stat-card glass-card p-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6>Total Events</h6>
+                                    <h3 id="totalEvents">0</h3>
+                                </div>
+                                <i class="fas fa-calendar fa-2x gradient-text"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                        <div class="stat-card glass-card p-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6>Total Guests</h6>
+                                    <h3 id="totalGuests">0</h3>
+                                </div>
+                                <i class="fas fa-users fa-2x gradient-text"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                        <div class="stat-card glass-card p-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6>Checked In</h6>
+                                    <h3 id="checkedIn">0</h3>
+                                </div>
+                                <i class="fas fa-check-circle fa-2x gradient-text"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                        <div class="stat-card glass-card p-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6>Pending</h6>
+                                    <h3 id="pending">0</h3>
+                                </div>
+                                <i class="fas fa-clock fa-2x gradient-text"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6" data-aos="fade-right">
+                        <div class="glass-card p-3">
+                            <h5>Attendance Overview</h5>
+                            <canvas id="attendanceChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-6" data-aos="fade-left">
+                        <div class="glass-card p-3">
+                            <h5>Recent Activity</h5>
+                            <canvas id="activityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guest List -->
+                <div class="row" data-aos="fade-up">
+                    <div class="col-12">
+                        <div class="glass-card p-3">
+                            <h5>Recent Guests</h5>
+                            <div class="table-responsive">
+                                <table class="table" id="guestTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Event</th>
+                                            <th>Status</th>
+                                            <th>QR Code</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="guestList">
+                                        <!-- Dynamic content -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- في نهاية ملف public/index.html، استبدل وسوم Script بهذا الترتيب -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="../assets/js/app.js"></script>
+<script>
+    // تأكد من إخفاء loader بعد تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500);
+            }
+        }, 1000); // تأخير بسيط للتأكد من تحميل كل شيء
+    });
+</script>
+</body>
+</html>
